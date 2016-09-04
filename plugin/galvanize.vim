@@ -1,6 +1,4 @@
 " TODO: use l: for function vars
-" TODO: use s: for function names
-" TODO: switch to s: for vars
 
 let s:galvanize_enabled = v:false
 
