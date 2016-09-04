@@ -21,6 +21,22 @@ let s:galvanize_enabled = v:false
     return s:opt_use_autoread()
   endfunction
 
+  function! s:opt_clipboard_unnamed()
+    if exists('g:galvanize_opt_clipboard_unnamed')
+          \ && type(g:galvanize_opt_clipboard_unnamed) == 1
+      return g:galvanize_opt_clipboard_unnamed
+    endif
+    return 'unnamedplus'
+  endfunction
+
+  function! s:opt_clipboard_backup()
+    if exists('g:galvanize_opt_clipboard_backup')
+          \ && type(g:galvanize_opt_clipboard_backup) == 1
+      return g:galvanize_opt_clipboard_backup
+    endif
+    return ''
+  endfunction
+
 " }
 
 " variable wrappers {
@@ -46,7 +62,7 @@ let s:galvanize_enabled = v:false
     " boilerplate {
 
       function! s:has_norm_reg_names()
-        return exists('g:galvanize_norm_reg_names') 
+        return exists('g:galvanize_norm_reg_names')
               \ && type(g:galvanize_norm_reg_names) == 3
       endfunction
 
@@ -58,7 +74,7 @@ let s:galvanize_enabled = v:false
         let force = (a:0 >= 1) ? a:1 : v:false
         if force || !s:has_norm_reg_names()
           call s:delete_norm_reg_names()
-          let g:galvanize_norm_reg_names = 
+          let g:galvanize_norm_reg_names =
                 \ map(range(char2nr('a'),char2nr('z')),'nr2char(v:val)') + ['"']
         endif
       endfunction
@@ -180,7 +196,8 @@ let s:galvanize_enabled = v:false
     let has_augs = [
           \  s:has_aug_trigger_autoread(),
           \  s:has_aug_set_ftype(),
-          \  s:has_aug_yank()
+          \  s:has_aug_yank(),
+          \  s:has_aug_force_settings()
           \ ]
     let min_aug_res = min(has_augs)
     if min_aug_res < 0
@@ -195,12 +212,14 @@ let s:galvanize_enabled = v:false
     call s:delete_aug_trigger_autoread()
     call s:delete_aug_set_ftype()
     call s:delete_aug_yank()
+    call s:delete_aug_force_settings()
   endfunction
 
   function! s:make_all_aug()
     call s:make_aug_trigger_autoread()
     call s:make_aug_set_ftype()
     call s:make_aug_yank()
+    call s:make_aug_force_settings()
   endfunction
 
   function! s:reset_all_vars()
@@ -234,7 +253,45 @@ let s:galvanize_enabled = v:false
           autocmd CursorHoldI * silent! checktime
 
           " TODO: make own autogroup
-          autocmd WinEnter * call galvanize#set_options()
+          autocmd WinEnter * call galvanize#force_settings()
+        augroup END
+      endif
+    endfunction
+
+  " }
+
+  " buffer local settings hack {
+
+    function! s:has_aug_force_settings()
+      let has_aug = exists('#galvanize_force_settings')
+      let should_have_aug = v:true
+      return s:has_aug(has_aug, should_have_aug)
+    endfunction
+
+    function! s:delete_aug_force_settings()
+      augroup galvanize_force_settings
+        autocmd!
+      augroup END
+      augroup! galvanize_force_settings
+    endfunction
+
+    function! galvanize#force_settings()
+      " workaround for TextYank writefile
+      if exists('g:galvanize_preserve_opt')
+        unlet! g:galvanize_preserve_opt
+        return
+      elseif exists('b:reg_name') && b:reg_name == '"' && s:galvanize_enabled
+        execute 'set clipboard='.s:opt_clipboard_unnamed()
+      else
+        execute 'set clipboard='.s:opt_clipboard_backup()
+      endif
+    endfunction
+
+    function! s:make_aug_force_settings()
+      if (index([0, -1], s:has_aug_force_settings()) >= 0)
+        augroup galvanize_force_settings
+          autocmd!
+          autocmd BufRead * call galvanize#force_settings()
         augroup END
       endif
     endfunction
@@ -254,12 +311,6 @@ let s:galvanize_enabled = v:false
         autocmd!
       augroup END
       augroup! galvanize_set_ftype
-    endfunction
-
-    function! galvanize#airline_plugin(...)
-      if &filetype == 'galvanize_register'
-        let w:airline_section_b = b:reg_name
-      endif
     endfunction
 
     function! s:set_ftype(fname)
@@ -324,8 +375,13 @@ let s:galvanize_enabled = v:false
     command! -nargs=0 GalvanizeDisable call s:disable()
   endfunction
 
+    function! galvanize#airline_plugin(...)
+      if &filetype == 'galvanize_register'
+        let w:airline_section_b = b:reg_name
+      endif
+    endfunction
+
   function! s:enable_plugins()
-    " TODO: remove on disable
     if exists('*airline#add_statusline_func')
       call airline#add_statusline_func('galvanize#airline_plugin')
     endif
@@ -352,18 +408,10 @@ let s:galvanize_enabled = v:false
     let s:galvanize_enabled = v:false
   endfunction
 
-  " TODO: standardize opt
-  function! galvanize#set_options()
-    " workaround for writefile
-    if exists('g:galvanize_preserve_opt')
-      unlet! g:galvanize_preserve_opt
-      return
-    elseif exists('b:reg_name') && b:reg_name == '"'
-      set clipboard=unnamedplus
-    elseif exists('g:galvanize_opt_clipboard_backup')
-      execute 'set clipboard='.g:galvanize_opt_clipboard_backup
-    else
-      set clipboard=
+  function! galvanize#ftype_settings()
+    if s:opt_use_autoread()
+      setlocal autoread
+      set updatetime=100
     endif
   endfunction
 

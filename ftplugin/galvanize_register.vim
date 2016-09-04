@@ -1,16 +1,14 @@
-function! galvanize_register#write()
+function! s:write()
   write
   call setreg(b:reg_name, readfile(expand('%')))
 endfunction
 
 augroup galvanize_register_ftype
   autocmd!
-
   " autowrite
-  autocmd TextChanged <buffer> call galvanize_register#write()
-  autocmd InsertLeave <buffer> call galvanize_register#write()
+  autocmd TextChanged <buffer> call s:write()
+  autocmd InsertLeave <buffer> call s:write()
 augroup END
 
-setlocal autoread
-setlocal updatetime=100
-call galvanize#set_options()
+call galvanize#ftype_settings()
+call galvanize#force_settings()
