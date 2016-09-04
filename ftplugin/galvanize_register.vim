@@ -13,3 +13,4 @@ augroup END
 
 setlocal autoread
 setlocal updatetime=100
+call galvanize#set_options()

@@ -142,6 +142,7 @@ let s:galvanize_enabled = v:false
       if fname == ''
         return
       endif
+      let g:galvanize_preserve_opt = v:true
       call writefile(getreg(a:reg_name, 1, 1), fname)
     endfunction
 
@@ -233,6 +234,9 @@ let s:galvanize_enabled = v:false
           autocmd!
           autocmd CursorHold * silent! checktime
           autocmd CursorHoldI * silent! checktime
+
+          " TODO: make own autogroup
+          autocmd WinEnter * call galvanize#set_options()
         augroup END
       endif
     endfunction
@@ -298,8 +302,7 @@ let s:galvanize_enabled = v:false
       if (index([0, -1], s:has_aug_yank()) >= 0)
         augroup galvanize_yank
           autocmd!
-          autocmd TextYankPost *
-                \ call s:update_reg_file(v:register)
+          autocmd TextYankPost * call s:update_reg_file(v:register)
         augroup END
       endif
     endfunction
@@ -349,6 +352,21 @@ let s:galvanize_enabled = v:false
     call s:delete_all_aug()
     call s:disable_plugins()
     let s:galvanize_enabled = v:false
+  endfunction
+
+  " TODO: standardize opt
+  function! galvanize#set_options()
+    " workaround for writefile
+    if exists('g:galvanize_preserve_opt')
+      unlet! g:galvanize_preserve_opt
+      return
+    elseif exists('b:reg_name') && b:reg_name == '"'
+      set clipboard=unnamedplus
+    elseif exists('g:galvanize_opt_clipboard_backup')
+      execute 'set clipboard='.g:galvanize_opt_clipboard_backup
+    else
+      set clipboard=
+    endif
   endfunction
 
 " }
