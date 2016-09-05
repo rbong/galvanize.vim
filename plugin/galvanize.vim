@@ -347,10 +347,12 @@ let s:galvanize_enabled = v:false
 
     function! s:make_aug_yank()
       if (index([0, -1], s:has_aug_yank()) >= 0)
-        augroup galvanize_yank
-          autocmd!
-          autocmd TextYankPost * call s:update_reg_file(v:register)
-        augroup END
+        if exists('##TextYankPost')
+          augroup galvanize_yank
+            autocmd!
+            autocmd TextYankPost * call s:update_reg_file(v:register)
+          augroup END
+        endif
       endif
     endfunction
 
