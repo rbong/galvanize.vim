@@ -152,12 +152,13 @@ let s:galvanize_enabled = v:false
     endfunction
 
     function! s:update_reg_file(reg_name)
-      let fname = s:get_fname_from_reg_name(a:reg_name)
+      let reg_name=tolower(a:reg_name)
+      let fname = s:get_fname_from_reg_name(reg_name)
       if fname == ''
         return
       endif
       let g:galvanize_preserve_opt = v:true
-      call writefile(getreg(a:reg_name, 1, 1), fname)
+      call writefile(getreg(reg_name, 1, 1), fname)
     endfunction
 
     function! s:do_reg_file(reg_name, cmd)
@@ -264,7 +265,7 @@ let s:galvanize_enabled = v:false
 
     function! s:has_aug_force_settings()
       let has_aug = exists('#galvanize_force_settings')
-      let should_have_aug = v:true
+      let should_have_aug = s:galvanize_enabled
       return s:has_aug(has_aug, should_have_aug)
     endfunction
 
