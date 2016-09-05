@@ -252,9 +252,6 @@ let s:galvanize_enabled = v:false
           autocmd!
           autocmd CursorHold * silent! checktime
           autocmd CursorHoldI * silent! checktime
-
-          " TODO: make own autogroup
-          autocmd WinEnter * call galvanize#force_settings()
         augroup END
       endif
     endfunction
@@ -292,7 +289,7 @@ let s:galvanize_enabled = v:false
       if (index([0, -1], s:has_aug_force_settings()) >= 0)
         augroup galvanize_force_settings
           autocmd!
-          autocmd BufRead * call galvanize#force_settings()
+          autocmd WinEnter * call galvanize#force_settings()
         augroup END
       endif
     endfunction
