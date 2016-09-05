@@ -411,6 +411,7 @@ let s:galvanize_enabled = v:false
       setlocal autoread
       set updatetime=100
     endif
+    setlocal bufhidden=delete
   endfunction
 
 " }
