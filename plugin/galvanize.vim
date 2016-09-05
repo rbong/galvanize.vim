@@ -367,6 +367,8 @@ let s:galvanize_enabled = v:false
           \ GalvanizeVsplit call s:do_reg_file(<f-args>, 'vsplit')
     command! -complete=customlist,s:complete_norm_reg_name -nargs=1
           \ GalvanizeUpdate call s:update_reg_file(<f-args>)
+    command! -complete=customlist,s:complete_norm_reg_name -nargs=1
+          \ GalvanizeTabe call s:do_reg_file(<f-args>, 'tabedit')
     command! -nargs=0 GalvanizeEnable call s:enable()
     command! -nargs=0 GalvanizeDisable call s:disable()
   endfunction

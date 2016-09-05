@@ -49,6 +49,9 @@ COMMANDS                                     *galvanize-commands*
                                              *galvanize-:GalvanizeEdit*
 :GalvanizeEdit [reg]        Open a register file in the current window.
 
+                                             *galvanize-:GalvanizeTabe*
+:GalvanizeTabe [reg]        Open a register file in a new tab.
+
                                              *galvanize-:GalvanizeSplit*
 :GalvanizeSplit [reg]       Open a register file in a horizontal split.
 

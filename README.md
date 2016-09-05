@@ -25,6 +25,11 @@ Also open register *a*, but in a horizontal split.
 :GalvanizeSplit A
 ```
 
+Open register *z* in a new tab.
+```
+:GalvanizeTabe z
+```
+
 When editing any of the buffers opened by these commands, you can edit the
 buffers and they will update the registers. Similarly, editing the registers
 with vim actions will update the buffers.

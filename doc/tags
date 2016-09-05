@@ -10,6 +10,7 @@ galvanize-:GalvanizeDisable	galvanize.txt	/*galvanize-:GalvanizeDisable*
 galvanize-:GalvanizeEdit	galvanize.txt	/*galvanize-:GalvanizeEdit*
 galvanize-:GalvanizeEnable	galvanize.txt	/*galvanize-:GalvanizeEnable*
 galvanize-:GalvanizeSplit	galvanize.txt	/*galvanize-:GalvanizeSplit*
+galvanize-:GalvanizeTabe	galvanize.txt	/*galvanize-:GalvanizeTabe*
 galvanize-:GalvanizeUpdate	galvanize.txt	/*galvanize-:GalvanizeUpdate*
 galvanize-:GalvanizeVsplit	galvanize.txt	/*galvanize-:GalvanizeVsplit*
 galvanize-autoread	galvanize.txt	/*galvanize-autoread*
