@@ -3,7 +3,6 @@
 let s:galvanize_enabled = v:false
 
 " user options {
-" TODO: docs
 
   function! s:opt_use_autoread()
     if exists('g:galvanize_opt_use_autoread')
@@ -57,7 +56,6 @@ let s:galvanize_enabled = v:false
   endfunction
 
   " normal register names {
-  " TODO: docs
 
     " boilerplate {
 
@@ -97,7 +95,6 @@ let s:galvanize_enabled = v:false
   " }
 
   " register filenames {
-  " TODO: docs
 
     " boilerplate {
 
@@ -229,7 +226,6 @@ let s:galvanize_enabled = v:false
   endfunction
 
   " trigger autoread regularly {
-  " TODO: docs
 
     function! s:has_aug_trigger_autoread()
       let has_aug = exists('#galvanize_trigger_autoread')

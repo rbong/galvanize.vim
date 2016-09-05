@@ -1,0 +1,96 @@
+*galvanize.txt*  Edit registers as buffers
+
+Author:  Roger Bongers <http://github.com/rbong>
+
+This plugin requires neovim for its full range of features.
+
+INTRODUCTION                                 *galvanize*
+
+This plugin creates buffers that represent registers. They update in real time
+as the register is updated and can be edited to modify the buffer.
+
+Registers a-z (which can also be represented as A-Z) and the unnamed buffer can
+be used (see |registers| |quotequote|).
+
+VIM COMPATIBILITY                            *galvanize_vim-compatibility* 
+
+This plugin uses neovim's |TextYankPost| event trigger. If it is not available,
+it is required that |:GalvanizeUpdate| is manually called.
+
+AUTOREAD                                     *galvanize-autoread*
+
+By default, the plugin attempts to use 'autoread' to update register files. It
+increases 'updatetime' and triggers *:checktime* on *CursorHold* and
+*CursorHoldI* events. In the future, there is a hope that galvanize will not
+have to change vim's settings, likely by using background job control.
+
+(see |g:galvanize_opt_use_autoread|, |g:galvanize_opt_trigger_autoread|)
+
+UNNAMED REGISTER                             *galvanize-unnamed*
+
+The galvanize unnamed register is difficult to work with when the unnamed
+register itself is unavaiilable. When switching to the unnamed register
+buffer, galvanize attempts to set the 'clipboard' setting to
+|g:galvanize_opt_clipboard_unnamed| and when switching back, attempts to set
+it to |g:galvanize_opt_clipboard_backup|.
+
+The hope is that one day this will be available as a local setting.
+
+COMMANDS                                     *galvanize-commands*
+
+                                             *galvanize-:GalvanizeEnable*
+:GalvanizeEnable            Enable the plugin. The plugin is already enabled
+                            when starting vim.
+
+                                             *galvanize-:GalvanizeDisable*
+:GalvanizeDisable           Disable the plugin. The plugin will not update
+                            register files.
+
+                                             *galvanize-:GalvanizeEdit*
+:GalvanizeEdit [reg]        Open a register file in the current window.
+
+                                             *galvanize-:GalvanizeSplit*
+:GalvanizeSplit [reg]       Open a register file in a horizontal split.
+
+                                             *galvanize-:GalvanizeVsplit*
+:GalvanizeVsplit [reg]      Open a register file in a vertical split.
+
+                                             *galvanize-:GalvanizeUpdate*
+:GalvanizeUpdate [reg]      Manually update a register file with the contents
+                            of the register.
+
+CONFIGURATION                                *galvanize-configuration*
+
+g:galvanize_opt_use_autoread                 *g:galvanize_opt_use_autoread*
+
+Use autoread to detect changes in files (see |galvanize-autoread|). Boolean,
+true by default.
+
+g:galvanize_opt_trigger_autoread             *g:galvanize_opt_trigger_autoread*
+
+Trigger the autoread command regularly with autocommands (see
+|galvanize-autoread|). Boolean, true by default.
+
+g:galvanize_opt_clipboard_unnamed            *g:galvanize_opt_clipboard_unnamed*
+
+The 'clipboard' setting to use when editing the unnamed register (see
+|galvanize-unnamed|). String, "unnamedplus" by default.
+
+g:galvanize_opt_clipboard_unnamed            *g:galvanize_opt_clipboard_backup*
+
+The 'clipboard' setting to use when not editing the unnamed register (see
+|galvanize-unnamed|). String, empty by default.
+
+KNOWN ISSUES                                  *galvanize-issues*
+
+* Sometimes files aren't updated when not enough has happened since the last
+  update (cursor only moved one or two spaces). This is likely a problem with
+  |TextYankPost|.
+
+* neovim triggers Enter autocommands when calling |writefile()| in
+  |TextYankPost|, but not Leave autocommands. This is an issue for updating the
+  clipboard setting (see |galvanize-unnamed|). As a workaround, a flag is set.
+  Let this issue serve as a reminder to remove the flag when this bug is fixed.
+
+* neovim's internal settings should not be muddled with. In the future, this
+  plugin will stop using autoread (see |galvanize-autoread|).
