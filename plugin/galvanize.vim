@@ -381,7 +381,7 @@ let s:galvanize_enabled = v:false
 
   function! s:enable_plugins()
     if exists('*airline#add_statusline_func')
-      call airline#add_statusline_func('galvanize#airline_plugin')
+      silent! call airline#add_statusline_func('galvanize#airline_plugin')
     endif
   endfunction
 
