@@ -15,6 +15,7 @@ galvanize-:GalvanizeVsplit	galvanize.txt	/*galvanize-:GalvanizeVsplit*
 galvanize-autoread	galvanize.txt	/*galvanize-autoread*
 galvanize-commands	galvanize.txt	/*galvanize-commands*
 galvanize-configuration	galvanize.txt	/*galvanize-configuration*
+galvanize-issues	galvanize.txt	/*galvanize-issues*
 galvanize-unnamed	galvanize.txt	/*galvanize-unnamed*
 galvanize.txt	galvanize.txt	/*galvanize.txt*
 galvanize_vim-compatibility	galvanize.txt	/*galvanize_vim-compatibility*
