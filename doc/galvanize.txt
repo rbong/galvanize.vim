@@ -7,10 +7,10 @@ This plugin requires neovim for its full range of features.
 INTRODUCTION                                 *galvanize*
 
 This plugin creates buffers that represent registers. They update in real time
-as the register is updated and can be edited to modify the buffer.
+as the register is updated and can be edited to modify the register.
 
-Registers a-z (which can also be represented as A-Z) and the unnamed buffer can
-be used (see |registers| |quotequote|).
+Registers a-z (which can also be represented as A-Z) and the unnamed register
+can be used (see |registers| |quotequote|).
 
 VIM COMPATIBILITY                            *galvanize_vim-compatibility* 
 
