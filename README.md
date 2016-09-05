@@ -7,3 +7,24 @@ Registers a-z (which can also be represented as A-Z) and the unnamed register
 can be used.
 
 See the vim help documentation for more.
+
+## Examples
+
+Open the unnamed register in the current window.
+```
+:GalvanizeEdit "
+```
+
+Open register *a* in a vertical split.
+```
+:GalvanizeVsplit a
+```
+
+Also open register *a*, but in a horizontal split.
+```
+:GalvanizeSplit A
+```
+
+When editing any of the buffers opened by these commands, you can edit the
+buffers and they will update the registers. Similarly, editing the registers
+with vim actions will update the buffers.
