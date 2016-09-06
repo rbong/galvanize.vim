@@ -10,6 +10,11 @@ See the vim help documentation for more.
 
 ## Examples
 
+Open register *b* in a horizontal split.
+```
+c@b
+```
+
 Open the unnamed register in the current window.
 ```
 :GalvanizeEdit "
