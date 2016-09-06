@@ -6,6 +6,8 @@ as the register is updated and can be edited to modify the register.
 Registers a-z (which can also be represented as A-Z) and the unnamed register
 can be used.
 
+galvanize.vim requires neovim for its full range of features.
+
 See the vim help documentation for more.
 
 ## Examples
