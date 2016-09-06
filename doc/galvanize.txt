@@ -97,3 +97,11 @@ KNOWN ISSUES                                  *galvanize-issues*
 
 * neovim's internal settings should not be muddled with. In the future, this
   plugin will stop using autoread (see |galvanize-autoread|).
+
+* Macros will currently not update the register file, because they come with no
+  autocommand and I am not willing to re-bind q. You can still update the
+  buffer with |GalvanizeUpdate|.
+
+* Things can get weird when redirecting to registers with them open. Although
+  this is a known issue, please submit any instances of this happening as an
+  issue on github, as the exact circumstances of when this happens are unclear.
