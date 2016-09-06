@@ -36,6 +36,14 @@ let s:galvanize_enabled = v:false
     return ''
   endfunction
 
+  function! s:opt_split_map_enable()
+    if exists('g:galvanize_opt_split_map_enable')
+          \ && type(g:galvanize_opt_split_map_enable) == 1
+      return g:galvanize_opt_split_map_enable
+    endif
+    return v:true
+  endfunction
+
 " }
 
 " variable wrappers {
@@ -373,11 +381,27 @@ let s:galvanize_enabled = v:false
     command! -nargs=0 GalvanizeDisable call s:disable()
   endfunction
 
-    function! galvanize#airline_plugin(...)
-      if &filetype == 'galvanize_register'
-        let w:airline_section_b = b:reg_name
-      endif
-    endfunction
+  function! s:declare_mappings()
+    if s:opt_split_map_enable()
+      for reg_name in s:get_norm_reg_names()
+        execute 'nnoremap c@'.reg_name.' :GalvanizeSplit '.reg_name.'<CR>'
+      endfor
+      nnoremap c@@ :GalvanizeSplit "<CR>
+    endif
+  endfunction
+
+  function! s:delete_mappings()
+    for reg_name in s:get_norm_reg_names()
+      execute 'silent! unmap c@'.reg_name
+    endfor
+    silent! unmap c@@
+  endfunction
+
+  function! galvanize#airline_plugin(...)
+    if &filetype == 'galvanize_register'
+      let w:airline_section_b = b:reg_name
+    endif
+  endfunction
 
   function! s:enable_plugins()
     if exists('*airline#add_statusline_func')
@@ -395,6 +419,7 @@ let s:galvanize_enabled = v:false
     call s:clean_all_vars()
     call s:make_all_aug()
     call s:declare_ex_cmds()
+    call s:declare_mappings()
     call s:enable_plugins()
     let s:galvanize_enabled = v:true
   endfunction
@@ -403,6 +428,7 @@ let s:galvanize_enabled = v:false
     call s:delete_all_vars()
     call s:delete_all_aug()
     call s:disable_plugins()
+    call s:delete_mappings()
     let s:galvanize_enabled = v:false
   endfunction
 
