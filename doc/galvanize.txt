@@ -36,6 +36,12 @@ it to |g:galvanize_opt_clipboard_backup|.
 
 The hope is that one day this will be available as a local setting.
 
+MAPPINGS                                     *galvanize-mappings*
+
+                                             *galvanize-c@*
+c@{reg}                     Open the given register in a split. Use @@ for the
+                            unnamed register.
+
 COMMANDS                                     *galvanize-commands*
 
                                              *galvanize-:GalvanizeEnable*
@@ -45,6 +51,10 @@ COMMANDS                                     *galvanize-commands*
                                              *galvanize-:GalvanizeDisable*
 :GalvanizeDisable           Disable the plugin. The plugin will not update
                             register files.
+
+                                             *galvanize-:GalvanizeUpdate*
+:GalvanizeUpdate [reg]      Manually update a register file with the contents
+                            of the register.
 
                                              *galvanize-:GalvanizeEdit*
 :GalvanizeEdit [reg]        Open a register file in the current window.
@@ -57,10 +67,6 @@ COMMANDS                                     *galvanize-commands*
 
                                              *galvanize-:GalvanizeVsplit*
 :GalvanizeVsplit [reg]      Open a register file in a vertical split.
-
-                                             *galvanize-:GalvanizeUpdate*
-:GalvanizeUpdate [reg]      Manually update a register file with the contents
-                            of the register.
 
 CONFIGURATION                                *galvanize-configuration*
 
@@ -79,10 +85,14 @@ g:galvanize_opt_clipboard_unnamed            *g:galvanize_opt_clipboard_unnamed*
 The 'clipboard' setting to use when editing the unnamed register (see
 |galvanize-unnamed|). String, "unnamedplus" by default.
 
-g:galvanize_opt_clipboard_unnamed            *g:galvanize_opt_clipboard_backup*
+g:galvanize_opt_clipboard_backup            *g:galvanize_opt_clipboard_backup*
 
 The 'clipboard' setting to use when not editing the unnamed register (see
 |galvanize-unnamed|). String, empty by default.
+
+g:galvanize_opt_split_map_enable            *g:galvanize_opt_split_map_enable*
+
+Enable the c@ mapping (see |galvanize-c@|).
 
 KNOWN ISSUES                                  *galvanize-issues*
 
