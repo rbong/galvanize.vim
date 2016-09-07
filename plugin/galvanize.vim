@@ -381,14 +381,6 @@ let s:galvanize_enabled = v:false
     command! -nargs=0 GalvanizeDisable call s:disable()
   endfunction
 
-  function! s:split_mapping()
-    let char = nr2char(getchar())
-    if char == '@'
-      let char = '"'
-    endif
-    execute 'GalvanizeSplit '.char
-  endfunction
-
   function! s:declare_mappings()
     if s:opt_split_map_enable()
       nnoremap c@ :execute 'GalvanizeSplit '.nr2char(getchar())<CR>
