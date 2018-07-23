@@ -1,5 +1,8 @@
 # galvanize.vim
 
+**This repository is deprecated in favor of [vim-regbuf](https://github.com/rbong/vim-regbuf)**.
+regbuf works with vim and is more delightfully simple.
+
 This plugin creates buffers that represent registers. They update in real time
 as the register is updated and can be edited to modify the register.
 
